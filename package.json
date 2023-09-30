@@ -1,5 +1,5 @@
 {
-  "name": "excel-risk-lookup",
+  "name": "NatCatIndex",
   "version": "1.0.0",
   "description": "",
   "main": "app1.js",
@@ -72,7 +72,7 @@
     "xlsx": "^0.18.5"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app1.js"
   },
   "keywords": [],
