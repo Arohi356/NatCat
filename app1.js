@@ -12,18 +12,18 @@ app.listen(port, () => {
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Endpoint to handle risk index lookup
-app.get('/', (req, res) => {
+//app.get('/', (req, res) => {
     // Your logic for the home route
-    res.send('Hello, this is the home page.');
-});
+   // res.send('Hello, this is the home page.');
+//});
 
-app.get('/lookup', (req, res) => {
+app.get('/', (req, res) => {
 //  res.send('Hello, this is the home page2.');
   const { lat, long } = req.query;
   const workbook = xlsx.readFile('public/risk-data.xlsx'); // Change the filename as needed
   const sheetName = 'Sheet1'; // Change the sheet name as needed
   const worksheet = workbook.Sheets[sheetName];
-  res.send('Hello, this is the home page3.');
+  //res.send('Hello, this is the home page3.');
   if (!worksheet) {
     res.status(500).json({ error: 'Worksheet not found' });
     return;
