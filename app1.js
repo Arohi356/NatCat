@@ -3,10 +3,20 @@ const app = express();
 const xlsx = require('xlsx');
 const path = require('path');
 
+const port = process.env.PORT || 10000;
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
+
 // Serve static files (e.g., your Excel file)
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Endpoint to handle risk index lookup
+app.get('/', (req, res) => {
+    // Your logic for the home route
+    res.send('Hello, this is the home page.');
+});
+
 app.get('/lookup', (req, res) => {
   const { lat, long } = req.query;
   const workbook = xlsx.readFile('public/risk-data.xlsx'); // Change the filename as needed
