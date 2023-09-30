@@ -5,7 +5,7 @@ function calculateRisk() {
         const riskIndexElement = document.getElementById('risk-index');
         console.log("lat is", latitude)
         // Make an HTTP request to your Node.js server
-        fetch(`http://localhost:8080/lookup?lat=${latitude}&long=${longitude}`)
+        fetch(`lat=${latitude}&long=${longitude}`)
             .then(response => response.json())
             .then(data => {
                 if (data.riskIndex !== undefined) {
