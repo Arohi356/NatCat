@@ -45,7 +45,9 @@ app.get('/lookup', (req, res) => {
 });
 
 // Start the server
-const port = process.env.PORT || 8080;
-app.listen(port, () => {
+const port = process.env.PORT || 3001;
+const server = app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+server.keepAliveTimeout = 120 * 1000;
+server.headersTimeout = 120 * 1000;
