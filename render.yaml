@@ -1,5 +1,6 @@
 services:
 - type: web
-  name: nodejs
-  buildCommand: npm install
-  startCommand: npm start
+  Runtime:	Node
+  buildCommand: yarn
+  startCommand: node app.js
+
