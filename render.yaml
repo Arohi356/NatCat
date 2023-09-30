@@ -1,7 +1,5 @@
-version: 1
 services:
-  -type: web
-   name: nodejs
-   env: node
-   buildCommand: npm install
-   startCommand: npm start
+- type: web
+  name: nodejs
+  buildCommand: npm install
+  startCommand: node server.js
