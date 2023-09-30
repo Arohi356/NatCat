@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nat Cat Insurance for Everyone</title>
+    <style>
+        /* Your CSS styles here */
+        #header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        #header a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        #main-container {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        #map-container {
+            width: 50%; /* 50% of the layout width for the map */
+            height: 100vh; /* Set the map height to fill the viewport */
+        }
+
+        #info-container {
+            width: 50%; /* 50% of the layout width for the info sections */
+            height: 50%;
+            padding: 20px;
+
+            border: 1px solid #ccc; /* Border to create boundaries */
+            background-color: #f9f9f9; /* Light background color */
+
+        }
+
+        #info-container h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .input-container {
+            margin-bottom: 10px;
+        }
+
+        #claim-container {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50%;
+            height: 50%;
+            border: 1px solid #ccc; /* Border to create boundaries */
+            background-color: #f9f9f9; /* Light background color */
+            padding: 20px; /* Add padding to the section */
+        }
+
+        #claim-container h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            margin-left: 20px;
+        }
+
+        /* Add styles for the "Fast and transparent Claim" section here */
+    </style>
+
+    <!-- Include Leaflet library from CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<body>
+    <div id="header">
+        <a href="products.html">Products</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="login.html">Log In</a>
+    </div>
+    <div id="main-container">
+        
+        <!-- Map container -->
+        <div id="map-container"></div>
+        <!-- Information container -->
+        <div id="info-container">
+            <h2>Insurance that works for you</h2>
+            <div class="input-container">
+                <label for="lat-input">Latitude:</label>
+                <input type="text" id="lat-input">
+            </div>
+            <div class="input-container">
+                <label for="long-input">Longitude:</label>
+                <input type="text" id="long-input">
+            </div>
+            <div class="input-container">
+                <button onclick="calculateRisk()">Calculate Risk Index</button>
+            </div>
+            <div class="input-container">
+                <label for="risk-index">Risk Index:</label>
+                <span id="risk-index"></span>
+            </div>
+
+            <!-- Add the "Payout structure" field here -->
+            <div class="input-container">
+                <label for="payout-structure">Payout Structure:</label>
+                <select id="payout-structure">
+                <option value="10">>100mm (10%), >200mm (50%), >500mm (100%)</option>
+                <option value="50">>100mm (5%), >200mm (25%), >500mm (100%)</option>
+                <option value="100">>200mm (25%), >500mm (50%), >1000mm (100%)</option>
+            </select>
+            </div>
+
+                <!-- Add the "Coverage (in INR)" field here -->
+            <div class="input-container">
+            <label for="coverage-inr">Coverage (in INR):</label>
+            <select id="coverage-inr">
+                <option value="25000">25,000</option>
+                <option value="100000">1 Lakh</option>
+                <option value="1000000">10 Lakh</option>
+                <option value="2500000">25 Lakh</option>
+                <option value="other">Other</option>
+            </select>
+            </div>
+
+        <!-- Input field for manual entry if "Other" is selected -->
+        <div class="input-container" id="other-coverage" style="display: none;">
+            <label for="other-coverage-value">Enter Other Coverage:</label>
+            <input type="text" id="other-coverage-value">
+        </div>
+
+        <!-- Button to Calculate Premium -->
+        <div class="input-container">
+             <button onclick="calculatePremium()">Calculate Premium</button>
+        </div>
+
+    <!-- Display Premium Result -->
+    <div class="input-container">
+        <label for="premium">Premium:</label>
+        <span id="premium"></span>
+    </div>
+
+        </div>
+   <!-- "Fast and transparent Claim" section -->
+<div id="claim-container">
+    <h2>Fast and transparent Claim</h2>
+    <div class="input-container">
+        <label for="policy-id">Policy ID:</label>
+        <input type="text" id="policy-id">
+    </div>
+    <div class="input-container">
+        <label for="">Catastrophic events:</label>
+        <select id="catastrophic-events">
+            <option value="July 7-10 North India floods">July 7-10 North India floods</option>
+            <option value="Sept 9-10 Mumbai floods">Sept 9-10 Mumbai floods</option>
+        </select>
+    </div>
+    
+    <div class="input-container">
+        <label for="loss-of-proof">Loss of proof:</label>
+        <input type="file" id="loss-of-proof" accept="image/*">
+    </div>
+</div>
+    </div>
+
+
+
+
+<!-- JavaScript to show/hide the manual entry field for "Other" and calculate premium -->
+<script>
+    document.getElementById("coverage-inr").addEventListener("change", function () {
+        var otherCoverage = document.getElementById("other-coverage");
+        if (this.value === "other") {
+            otherCoverage.style.display = "block";
+        } else {
+            otherCoverage.style.display = "none";
+        }
+    });
+</script>
+
+    <!-- Include your JavaScript file (maps.js) -->
+    <script src="maps.js"></script>
+    <script src = "natcatappfunctions.js"></script>
+   
+</body>
+</html>
