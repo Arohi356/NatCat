@@ -2,6 +2,13 @@ const express = require('express');
 const app = express();
 const xlsx = require('xlsx');
 const path = require('path');
+
+// Start the server
+const port = process.env.PORT || 10000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+
 // Serve static files (e.g., your Excel file)
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -46,8 +53,8 @@ app.get('/lookup', (req, res) => {
 
 // Start the server
 const port = process.env.PORT || 10000;
-const server = app.listen(port, () => {
+app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-server.keepAliveTimeout = 120 * 1000;
-server.headersTimeout = 120 * 1000;
+//server.keepAliveTimeout = 120 * 1000;
+//server.headersTimeout = 120 * 1000;
