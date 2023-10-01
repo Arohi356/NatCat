@@ -9,6 +9,7 @@ function initializeMap() {
     var hurricaneTracksGeoJSON = 'Historic_Major_Hurricane_Tracks.geojson';
     var gpmGeoJSON = 'gpm_3d.20230912.geojson';
     var gpmGeoJSON2 = 'gpm_3d.20230710.geojson';
+    var gpmGeoJSON3 = 'gpm_1d.20230929.geojson';
     
 
     // Load GeoJSON data from a file
@@ -75,7 +76,7 @@ function initializeMap() {
             });
 
             // Add the gpmLayer to the layerControl as an overlay
-            layerControl.addOverlay(gpmLayer, 'Sept 10-11 flooding UP & Bihar');
+            layerControl.addOverlay(gpmLayer, 'Sept 10-11 flooding UP & Uttrakhand');
         })
         .catch(error => {
             console.error('Error loading GeoJSON data:', error);
@@ -118,9 +119,44 @@ function initializeMap() {
         });
 
 
+// https://gpm.nasa.gov/data/visualizations/precip-apps
+    // Load GeoJSON data from a file
+    fetch(gpmGeoJSON3)
+        .then(response => response.json())
+        .then(geojsonData => {
+
+            function getColor(precip) {
+                // Customize the color range based on your preferences
+                return precip > 150 ? 'red' :
+                    precip > 50 ? 'orange' :
+                    precip > 1 ? 'yellow' :
+                    'green';
+            }
+            // Create a GeoJSON layer for GPM precipitation
+            var gpmLayer = L.geoJSON(geojsonData, {
+                style: function (feature) {
+                    return {
+                        fillColor: getColor(feature.properties.precip),
+                        color: 'white',
+                        weight: 1,
+                        opacity: 0.5,
+                        fillOpacity: 0.1
+                    };
+                },
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup('Precipitation: ' + feature.properties.precip + ' mm');
+                }
+            });
+
+            // Add the gpmLayer to the layerControl as an overlay
+            layerControl.addOverlay(gpmLayer, '1 day Sept 29 New York City Flooding');
+        })
+        .catch(error => {
+            console.error('Error loading GeoJSON data:', error);
+        });
 
 
-
+    
     
     // Add a click event listener to the map
     map.on('click', function (e) {
