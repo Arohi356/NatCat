@@ -1,4 +1,3 @@
-
 function initializeMap() {
     const map = L.map('map-container').setView([20.7128, 75.0060], 5); // Default center and zoom level
     var osmlayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -9,6 +8,8 @@ function initializeMap() {
     var layerControl = L.control.layers({ 'OpenStreetMap': osmlayer }, null, { position: 'topright' }).addTo(map);
     var hurricaneTracksGeoJSON = 'Historic_Major_Hurricane_Tracks.geojson';
     var gpmGeoJSON = 'gpm_3d.20230912.geojson';
+    var gpmGeoJSON2 = 'gpm_3d.20230710.geojson';
+    
 
     // Load GeoJSON data from a file
     fetch(hurricaneTracksGeoJSON)
@@ -74,12 +75,53 @@ function initializeMap() {
             });
 
             // Add the gpmLayer to the layerControl as an overlay
-            layerControl.addOverlay(gpmLayer, 'GPM Precipitation');
+            layerControl.addOverlay(gpmLayer, 'Sept 10-11 flooding UP & Bihar');
         })
         .catch(error => {
             console.error('Error loading GeoJSON data:', error);
         });
 
+    // https://gpm.nasa.gov/data/visualizations/precip-apps
+    // Load GeoJSON data from a file
+    fetch(gpmGeoJSON2)
+        .then(response => response.json())
+        .then(geojsonData => {
+
+            function getColor(precip) {
+                // Customize the color range based on your preferences
+                return precip > 150 ? 'red' :
+                    precip > 50 ? 'orange' :
+                    precip > 1 ? 'yellow' :
+                    'green';
+            }
+            // Create a GeoJSON layer for GPM precipitation
+            var gpmLayer = L.geoJSON(geojsonData, {
+                style: function (feature) {
+                    return {
+                        fillColor: getColor(feature.properties.precip),
+                        color: 'white',
+                        weight: 1,
+                        opacity: 0.5,
+                        fillOpacity: 0.1
+                    };
+                },
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup('Precipitation: ' + feature.properties.precip + ' mm');
+                }
+            });
+
+            // Add the gpmLayer to the layerControl as an overlay
+            layerControl.addOverlay(gpmLayer, 'July 7-10 North India flood');
+        })
+        .catch(error => {
+            console.error('Error loading GeoJSON data:', error);
+        });
+
+
+
+
+
+    
     // Add a click event listener to the map
     map.on('click', function (e) {
         const lat = e.latlng.lat.toFixed(6);
